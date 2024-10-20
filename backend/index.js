@@ -10,5 +10,7 @@ app.use(express.json());
 app.use('/', routers);
 
 const server = http.createServer(app);
-server.listen(port);
 
+server.listen(port,()=>{
+    console.log(`app listen to port ${port}`);
+})
