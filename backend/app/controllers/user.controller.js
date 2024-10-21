@@ -34,6 +34,31 @@ module.exports = {
       }
     },
     signin:async (req, res, next) => {
-      
+      try {
+        const { username, password } = req.body;
+
+        // Find the user by username
+        const user = await User.findOne({ where: { username } });
+
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid username or password' });
+        }
+
+        // Validate password
+        const isMatch = await user.validPassword(password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid username or password' });
+        }
+
+        // Generate JWT
+        const token = jwt.sign({ id: user.id, username: user.username }, SECRET_KEY, {
+            expiresIn: '1h',
+        });
+
+        res.json({ token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
     },
 }
