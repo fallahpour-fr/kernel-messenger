@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const routers = require('./app/routes');
 const http = require('http');
+require('dotenv').config();
 
 const port = 3000;
 

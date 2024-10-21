@@ -1,4 +1,3 @@
-// models/user.js
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
